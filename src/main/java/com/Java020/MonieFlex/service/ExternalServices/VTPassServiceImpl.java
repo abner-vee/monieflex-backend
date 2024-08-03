@@ -93,7 +93,7 @@ public class VTPassServiceImpl implements VtPassService{
                 .toEntity(VtPassElectricityResponse.class);
 
 
-        if (responseEntity != null && responseEntity.getStatusCode().is2xxSuccessful()) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             VtPassElectricityResponse responseBody = responseEntity.getBody();
             if (responseBody != null && responseBody.getResponseDescription().toLowerCase().contains("success")) {
                 String reference = responseBody.getToken() != null ? responseBody.getToken() : responseBody.getExchangeReference();
