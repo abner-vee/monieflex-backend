@@ -52,6 +52,11 @@ public class AuthenticationController {
     public ResponseEntity<String> resetForgottenPassword(@RequestParam String email,@RequestParam String token, @RequestParam String newPassword, @RequestParam String confirmPassword) throws MessagingException {
         return new ResponseEntity<>(service.resetForgottenPassword(email, token, newPassword, confirmPassword), HttpStatus.OK);
     }
+
+    @GetMapping("/resend-otp")
+    public ResponseEntity<String> resendOTP(@RequestParam String email) throws MessagingException {
+        return new ResponseEntity<>(service.resendOTP(email), HttpStatus.OK);
+    }
 }
 
 

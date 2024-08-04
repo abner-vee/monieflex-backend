@@ -218,4 +218,11 @@ public class AuthenticationService {
                 properties
         );
     }
+
+    public String resendOTP(String email) throws MessagingException {
+        Customer user = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomerNotFoundException(String.format("Customer with the email %s does not exist", email)));
+        sendValidationEmail(user);
+        return "OTP sent to your registered email";
+    }
 }
