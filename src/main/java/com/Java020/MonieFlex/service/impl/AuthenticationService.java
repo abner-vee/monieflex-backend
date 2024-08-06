@@ -53,7 +53,7 @@ public class AuthenticationService {
 
     @Value("${frontend-reset-forgotten-password}")
     private String frontendResetPasswordUrl;
-
+    @Transactional
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new IllegalStateException("Role USER was not initialized"));

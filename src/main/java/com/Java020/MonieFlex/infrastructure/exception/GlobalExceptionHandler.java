@@ -1,14 +1,18 @@
 package com.Java020.MonieFlex.infrastructure.exception;
 
 import com.Java020.MonieFlex.domain.entities.ErrorDetails;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.postgresql.util.PSQLException;
 
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotFoundException.class)
@@ -137,6 +141,28 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .build();
         return  new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST) ;
+    }
+
+
+    @ExceptionHandler(PSQLException.class)
+    public final ResponseEntity<ErrorDetails> handleDatabaseException(PSQLException ex) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .message(ex.getMessage())
+                .debugMessage(ex.getMessage())
+                .dateTime(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT)
+                .build();
+        return  new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT) ;
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public final ResponseEntity<ErrorDetails> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .message("Duplicate data exists")
+                .debugMessage(ex.getMessage())
+                .dateTime(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT)
+                .build();
+        return  new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT) ;
     }
 }
 
