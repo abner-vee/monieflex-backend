@@ -35,11 +35,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class VTPassServiceImpl implements VtPassService{
-    @Value("${VTP_PUBLIC_KEY}")
+    @Value("${monieFlex.vtpass.public-key}")
     private String VTP_PUBLIC_KEY;
-    @Value("${VTP_SECRET_KEY}")
+    @Value("${monieFlex.vtpass.secret-key}")
     private String VTP_SECRET_KEY;
-    @Value("${VTP_API_KEY}")
+    @Value("${monieFlex.vtpass.api-key}")
     private String VTP_API_KEY;
 
     private final RestClient vtpassbaseurl;
